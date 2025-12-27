@@ -1,0 +1,11 @@
+{
+  "name": "widget",
+  "version": "1.0.0",
+  "main": "dist/widget.js",
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.4.21"
+  }
+}
