@@ -1,27 +1,20 @@
-// src/ui/ChatButton.js
-
 import { createChatWindow } from "./ChatWindow";
 
-export function createChatButton(root, config) {
-    console.log('[Chatbot] ChatButton.js loaded');
-  // 1️⃣ Create Shadow DOM root
-  const shadow = root.attachShadow({ mode: 'open' });
+export function createChatButton(shadowRoot, config) {
+  // 👉 Chat window first
+  const chatWindow = createChatWindow(shadowRoot);
 
-  // 👉 create chat window first
-  const chatWindow = createChatWindow(shadow);
+  // 👉 Floating button
+  const button = document.createElement("button");
+  button.id = "chat-button";
+  button.textContent = "💬";
 
-  // 2️⃣ Create floating button
-  const button = document.createElement('button');
-  button.id = 'chat-button';
-  button.textContent = '💬';
-  
-  // 3️⃣ Basic styles
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     #chat-button {
-      position: fixed;
-      bottom: 20px;
-      ${config.position === 'left' ? 'left: 20px;' : 'right: 20px;'}
+      position: absolute;
+      bottom: 0;
+      ${config.position === "left" ? "left: 0;" : "right: 0;"}
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -31,26 +24,19 @@ export function createChatButton(root, config) {
       border: none;
       cursor: pointer;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-      z-index: 1000000;
+      z-index: 1000001;
     }
-    #chat-button:hover {
-      transform: scale(1.1);
-    }
+    #chat-button:hover { opacity:0.9; }
   `;
 
-  // 4️⃣ Append style + button to shadow root
-  shadow.appendChild(style);
-  shadow.appendChild(button);
+  shadowRoot.appendChild(style);
+  shadowRoot.appendChild(button);
 
-  // 5️⃣ Click toggle placeholder (chat window future)
+  // 👉 Toggle chat window
   let chatOpen = false;
-  button.addEventListener('click', () => {
+  button.addEventListener("click", () => {
     chatOpen = !chatOpen;
-    // task 2.2
-    chatWindow.style.display = chatOpen ? 'flex' : 'none';
-
-    console.log('[Chatbot] Chat window', chatOpen ? 'opened' : 'closed');
-    // TODO: Open actual chat window
+    chatWindow.style.display = chatOpen ? "flex" : "none";
+    button.textContent = chatOpen ? "❌" : "💬";
   });
 }
