@@ -88,6 +88,19 @@ export function createChatWindow(shadowRoot) {
     </div>
 
 
+    <div
+  id="bot-typing"
+  style="
+    display:none;
+    margin-top:8px;
+    font-size:12px;
+    color:#777;
+  "
+>
+  🤖 Bot is typing...
+</div>
+
+
         
 
 
@@ -283,13 +296,88 @@ function addUserMessage(text) {
   messages.scrollTop = messages.scrollHeight;  //Scroll ko automatically bilkul bottom tak le jana,Scroll ko automatically bilkul bottom tak le jana,Jab naya message add ho
 }
 
+function addAgentMessage(text) {
+  const messages = shadowRoot.getElementById("messages");
+
+  const msg = document.createElement("div");
+  msg.innerText = text;
+
+  msg.style.margin = "8px 0";
+  msg.style.padding = "8px 10px";
+  msg.style.background = "#f1f1f1";
+  msg.style.color = "#000";
+  msg.style.borderRadius = "10px";
+  msg.style.maxWidth = "80%";
+  msg.style.marginRight = "auto"; // left side (agent)
+
+  messages.appendChild(msg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping() {
+  const typing = shadowRoot.getElementById("bot-typing");
+  if (typing) typing.style.display = "block";
+}
+
+function hideTyping() {
+  const typing = shadowRoot.getElementById("bot-typing");
+  if (typing) typing.style.display = "none";
+}
+
+
 function handleSend() {
   const value = input.value.trim();
   if (!value) return;
 
   addUserMessage(value);
   input.value = "";
+
+  showTyping();
+
+setTimeout(() => {
+  hideTyping();
+  addAgentMessage("Thanks for reaching out! How can I assist you further?");
+}, 1200);
 }
+
+// ❌ Issue 1 – Agent typing stacking ho sakta hai
+
+// Agar user fast fast multiple messages bhej de:
+
+// Multiple setTimeout queue ho jayenge
+
+// Agent replies overlap ho sakti hain
+
+// ❌ Issue 2 – Agent screen vs normal chat
+
+// Agar future me:
+
+// User agent-screen mode me chala gaya
+
+// Fir handleSend() trigger hua
+// → mixed UI ho sakta hai
+
+let agentTimer = null;
+
+// function handleSend() {
+//   const value = input.value.trim();
+//   if (!value) return;
+
+//   addUserMessage(value);
+//   input.value = "";
+
+//   showTyping();
+
+//   if (agentTimer) clearTimeout(agentTimer);
+
+//   agentTimer = setTimeout(() => {
+//     hideTyping();
+//     addAgentMessage("Thanks for reaching out! How can I assist you further?");
+//     agentTimer = null;
+//   }, 1200);
+// }
+
+
 
 sendBtn.onclick = handleSend;
 
