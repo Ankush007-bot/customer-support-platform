@@ -314,6 +314,19 @@ function addAgentMessage(text) {
   messages.scrollTop = messages.scrollHeight;
 }
 
+ const  setInputState=(disabled)=> {
+  const input = shadowRoot.getElementById("chat-text-input");
+  const sendBtn = shadowRoot.getElementById("chat-send-btn");
+
+  if (!input || !sendBtn) return;
+
+  input.disabled = disabled;
+  sendBtn.disabled = disabled;
+
+  sendBtn.style.opacity = disabled ? "0.6" : "1";
+  sendBtn.style.cursor = disabled ? "not-allowed" : "pointer";
+}
+
 function showTyping() {
   const typing = shadowRoot.getElementById("bot-typing");
   if (typing) typing.style.display = "block";
@@ -325,20 +338,22 @@ function hideTyping() {
 }
 
 
-function handleSend() {
-  const value = input.value.trim();
-  if (!value) return;
+// function handleSend() {
+//   const value = input.value.trim();
+//   if (!value) return;
 
-  addUserMessage(value);
-  input.value = "";
+//   addUserMessage(value);
+//   input.value = "";
 
-  showTyping();
+//   setInputState(true);   // 👈 disable input
+//   showTyping();
 
-setTimeout(() => {
-  hideTyping();
-  addAgentMessage("Thanks for reaching out! How can I assist you further?");
-}, 1200);
-}
+// setTimeout(() => {
+//   hideTyping();
+//   addAgentMessage("Thanks for reaching out! How can I assist you further?");
+//   setInputState(true);   // 👈 disable input
+// }, 1200);
+// }
 
 // ❌ Issue 1 – Agent typing stacking ho sakta hai
 
@@ -359,23 +374,24 @@ setTimeout(() => {
 
 let agentTimer = null;
 
-// function handleSend() {
-//   const value = input.value.trim();
-//   if (!value) return;
+function handleSend() {
+  const value = input.value.trim();
+  if (!value) return;
 
-//   addUserMessage(value);
-//   input.value = "";
+  addUserMessage(value);
+  input.value = "";
+ setInputState(true);   // 👈 disable input
+  showTyping();
 
-//   showTyping();
+  if (agentTimer) clearTimeout(agentTimer);
 
-//   if (agentTimer) clearTimeout(agentTimer);
-
-//   agentTimer = setTimeout(() => {
-//     hideTyping();
-//     addAgentMessage("Thanks for reaching out! How can I assist you further?");
-//     agentTimer = null;
-//   }, 1200);
-// }
+  agentTimer = setTimeout(() => {
+    hideTyping();
+    addAgentMessage("Thanks for reaching out! How can I assist you further?");
+    agentTimer = null;
+     setInputState(false);   // 👈 enable input
+  }, 1200);
+}
 
 
 
