@@ -98,3 +98,83 @@
 // Get real chats
 
 // Track users
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 🧠 Sprint 3 – Backend (REAL CHAT LOGIC)
+// 🟦 Task 3.1 – Backend project setup
+
+// Node.js + Express
+
+// Folder structure
+
+// /health test route
+
+// 📁
+
+// server/
+//  ├─ index.js
+//  ├─ routes/
+//  ├─ controllers/
+//  ├─ socket/
+
+// 🟦 Task 3.2 – Socket.IO integration
+
+// WebSocket connection
+
+// User ↔ Server live connection
+
+// Replace setTimeout fake replies
+
+// Events:
+
+// connect
+// chat:message
+// agent:typing
+// agent:message
+
+// 🟦 Task 3.3 – Chat session system
+
+// sessionId generate
+
+// One widget = one session
+
+// Future DB ready structure
+
+// 🟦 Task 3.4 – Agent simulation (server side)
+
+// Server se delayed replies
+
+// Typing event from backend
+
+// UI becomes dumb
+
+// 🟦 Task 3.5 – Connect Agent event
+
+// connect-agent → backend
+
+// agent assigned
+
+// state change from server
