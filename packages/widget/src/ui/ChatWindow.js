@@ -68,6 +68,45 @@ export function createChatWindow(shadowRoot) {
     </div>
 
 
+
+
+    <div id="chat-input" style="
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  border-top:1px solid #eee;
+">
+  <input
+    id="chat-text-input"
+    type="text"
+    placeholder="Type your message..."
+    style="
+      flex:1;
+      border:none;
+      padding:10px;
+      outline:none;
+      font-size:14px;
+    "
+  />
+  <button
+    id="chat-send-btn"
+    style="
+      border:none;
+      padding:0 16px;
+      cursor:pointer;
+      background:#007bff;
+      color:#fff;
+      font-size:14px;
+    "
+  >
+    Send
+  </button>
+</div>
+
+
+
           <div id="agent-screen" style="
   display:none;
   padding:12px;
@@ -194,6 +233,46 @@ function startFakeAgentChat(shadowRoot) {
     messagesBox.appendChild(msg);
   }, 2000);
 }
+
+
+// --- Task 2.1: Send message logic ---
+
+const input = shadowRoot.getElementById("chat-text-input");
+const sendBtn = shadowRoot.getElementById("chat-send-btn");
+const chatContent = shadowRoot.getElementById("chat-content");
+
+function addUserMessage(text) {
+  const msg = document.createElement("div");
+  msg.innerText = text;
+
+  msg.style.margin = "8px 0";
+  msg.style.padding = "8px 10px";
+  msg.style.background = "#007bff";
+  msg.style.color = "#fff";
+  msg.style.borderRadius = "10px";
+  msg.style.maxWidth = "80%";
+  msg.style.marginLeft = "auto"; // right side (user)
+
+  chatContent.appendChild(msg);
+  chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function handleSend() {
+  const value = input.value.trim();
+  if (!value) return;
+
+  addUserMessage(value);
+  input.value = "";
+}
+
+sendBtn.onclick = handleSend;
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    handleSend();
+  }
+});
+
 
 
 return chatWindow;

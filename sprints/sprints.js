@@ -1,5 +1,7 @@
 // 📌 OVERALL DELIVERY PLAN
 
+//npx vite build
+
 // Total Duration: ~10–12 weeks
 // Sprint Length: 2 weeks
 // Total Sprints: 6 Sprints

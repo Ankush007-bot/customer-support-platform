@@ -1,4 +1,4 @@
-(function(a){typeof define=="function"&&define.amd?define(a):a()})(function(){"use strict";function a(){if(!window.ChatbotConfig)throw new Error("[Chatbot] window.ChatbotConfig is missing");return{theme:"light",position:"right",apiBaseUrl:"https://api.yourbot.com",...window.ChatbotConfig}}function y(e){if(!e.productId)throw new Error("[Chatbot] productId is required");if(e.theme&&!["light","dark"].includes(e.theme))throw new Error('[Chatbot] theme must be "light" or "dark"');if(e.position&&!["left","right"].includes(e.position))throw new Error('[Chatbot] position must be "left" or "right"')}const l="[Chatbot]",c={info(...e){console.info(l,...e)},warn(...e){console.warn(l,...e)},error(...e){console.error(l,...e)}},f=[{id:1,question:"How do I reset my password?",answer:"You can reset your password from the account settings page."},{id:2,question:"Where can I check my orders?",answer:"You can view all orders in the My Orders section."},{id:3,question:"How do I contact customer support?",answer:"You can connect with a live agent using this chat."}];function m(e){const t=document.createElement("div");t.id="chat-window",t.style.position="fixed",t.style.bottom="90px",t.style.right="20px",t.style.width="320px",t.style.height="400px",t.style.background="#ffffff",t.style.borderRadius="12px",t.style.boxShadow="0 8px 24px rgba(0,0,0,0.2)",t.style.display="none",t.style.flexDirection="column",t.style.zIndex="1000000",t.innerHTML=`
+(function(c){typeof define=="function"&&define.amd?define(c):c()})(function(){"use strict";function c(){if(!window.ChatbotConfig)throw new Error("[Chatbot] window.ChatbotConfig is missing");return{theme:"light",position:"right",apiBaseUrl:"https://api.yourbot.com",...window.ChatbotConfig}}function b(t){if(!t.productId)throw new Error("[Chatbot] productId is required");if(t.theme&&!["light","dark"].includes(t.theme))throw new Error('[Chatbot] theme must be "light" or "dark"');if(t.position&&!["left","right"].includes(t.position))throw new Error('[Chatbot] position must be "left" or "right"')}const u="[Chatbot]",y={info(...t){console.info(u,...t)},warn(...t){console.warn(u,...t)},error(...t){console.error(u,...t)}},w=[{id:1,question:"How do I reset my password?",answer:"You can reset your password from the account settings page."},{id:2,question:"Where can I check my orders?",answer:"You can view all orders in the My Orders section."},{id:3,question:"How do I contact customer support?",answer:"You can connect with a live agent using this chat."}];function v(t){const e=document.createElement("div");e.id="chat-window",e.style.position="fixed",e.style.bottom="90px",e.style.right="20px",e.style.width="320px",e.style.height="400px",e.style.background="#ffffff",e.style.borderRadius="12px",e.style.boxShadow="0 8px 24px rgba(0,0,0,0.2)",e.style.display="none",e.style.flexDirection="column",e.style.zIndex="1000000",e.innerHTML=`
     <div style="
       padding:12px;
       font-weight:bold;
@@ -21,6 +21,45 @@
       "></div>
 
     </div>
+
+
+
+
+    <div id="chat-input" style="
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  border-top:1px solid #eee;
+">
+  <input
+    id="chat-text-input"
+    type="text"
+    placeholder="Type your message..."
+    style="
+      flex:1;
+      border:none;
+      padding:10px;
+      outline:none;
+      font-size:14px;
+    "
+  />
+  <button
+    id="chat-send-btn"
+    style="
+      border:none;
+      padding:0 16px;
+      cursor:pointer;
+      background:#007bff;
+      color:#fff;
+      font-size:14px;
+    "
+  >
+    Send
+  </button>
+</div>
+
 
 
           <div id="agent-screen" style="
@@ -49,8 +88,8 @@
 
 
   
-  `,e.appendChild(t);function r(n){const s=n.getElementById("question-list"),o=n.getElementById("answer-box");s&&(s.innerHTML="",f.forEach(d=>{const i=document.createElement("button");i.innerText=d.question,i.style.display="block",i.style.width="100%",i.style.margin="6px 0",i.style.padding="6px",i.style.cursor="pointer",i.style.border="1px solid #ddd",i.style.borderRadius="6px",i.style.background="#fff",i.onclick=()=>{o.style.display="block",o.innerHTML=`
-        <div>${d.answer}</div>
+  `,t.appendChild(e);function l(o){const n=o.getElementById("question-list"),r=o.getElementById("answer-box");n&&(n.innerHTML="",w.forEach(a=>{const i=document.createElement("button");i.innerText=a.question,i.style.display="block",i.style.width="100%",i.style.margin="6px 0",i.style.padding="6px",i.style.cursor="pointer",i.style.border="1px solid #ddd",i.style.borderRadius="6px",i.style.background="#fff",i.onclick=()=>{r.style.display="block",r.innerHTML=`
+        <div>${a.answer}</div>
         <div class="connect-agent" style="
           margin-top:10px;
           color:#007bff;
@@ -59,11 +98,11 @@
         ">
           ❓ Not helpful? Connect to live agent
         </div>
-      `;const b=o.querySelector(".connect-agent");b.onclick=()=>{const g=n.getElementById("chat-content"),h=n.getElementById("agent-screen");g&&h&&(console.log("[Chatbot] Switching to agent mode"),g.style.display="none",h.style.display="block",p(n))}},s.appendChild(i)}))}r(e);function p(n){const s=n.getElementById("agent-messages"),o=n.getElementById("typing-indicator");!s||!o||(o.style.display="block",setTimeout(()=>{o.style.display="none";const d=document.createElement("div");d.style.marginBottom="8px",d.innerText="Hi 👋 I’m Alex from support. How can I help you today?",s.appendChild(d)},2e3))}return t}function x(e,t){console.log("[Chatbot] ChatButton.js loaded");const r=e.attachShadow({mode:"open"}),p=m(r),n=document.createElement("button");n.id="chat-button",n.textContent="💬";const s=document.createElement("style");s.textContent=`
+      `;const I=r.querySelector(".connect-agent");I.onclick=()=>{const x=o.getElementById("chat-content"),m=o.getElementById("agent-screen");x&&m&&(console.log("[Chatbot] Switching to agent mode"),x.style.display="none",m.style.display="block",f(o))}},n.appendChild(i)}))}l(t);function f(o){const n=o.getElementById("agent-messages"),r=o.getElementById("typing-indicator");!n||!r||(r.style.display="block",setTimeout(()=>{r.style.display="none";const a=document.createElement("div");a.style.marginBottom="8px",a.innerText="Hi 👋 I’m Alex from support. How can I help you today?",n.appendChild(a)},2e3))}const s=t.getElementById("chat-text-input"),p=t.getElementById("chat-send-btn"),d=t.getElementById("chat-content");function E(o){const n=document.createElement("div");n.innerText=o,n.style.margin="8px 0",n.style.padding="8px 10px",n.style.background="#007bff",n.style.color="#fff",n.style.borderRadius="10px",n.style.maxWidth="80%",n.style.marginLeft="auto",d.appendChild(n),d.scrollTop=d.scrollHeight}function h(){const o=s.value.trim();o&&(E(o),s.value="")}return p.onclick=h,s.addEventListener("keydown",o=>{o.key==="Enter"&&h()}),e}function C(t,e){console.log("[Chatbot] ChatButton.js loaded");const l=t.attachShadow({mode:"open"}),f=v(l),s=document.createElement("button");s.id="chat-button",s.textContent="💬";const p=document.createElement("style");p.textContent=`
     #chat-button {
       position: fixed;
       bottom: 20px;
-      ${t.position==="left"?"left: 20px;":"right: 20px;"}
+      ${e.position==="left"?"left: 20px;":"right: 20px;"}
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -79,4 +118,4 @@
     #chat-button:hover {
       transform: scale(1.1);
     }
-  `,r.appendChild(s),r.appendChild(n);let o=!1;n.addEventListener("click",()=>{o=!o,p.style.display=o?"flex":"none",console.log("[Chatbot] Chat window",o?"opened":"closed")})}function u(){try{const e=a();y(e),c.info("Bootstrapping widget for product:",e.productId);const t=document.createElement("div");t.id="__chatbot_root__",t.style.position="fixed",t.style.bottom="20px",e.position==="left"?t.style.left="20px":t.style.right="20px",t.style.zIndex="999999",document.body.appendChild(t),x(t,e),c.info("Widget bootstrap completed")}catch(e){c.error(e.message||e)}}(function(){console.log("[Chatbot] index.js loaded"),!window.__CHATBOT_INITIALIZED__&&(window.__CHATBOT_INITIALIZED__=!0,document.readyState==="loading"?document.addEventListener("DOMContentLoaded",u):u())})()});
+  `,l.appendChild(p),l.appendChild(s);let d=!1;s.addEventListener("click",()=>{d=!d,f.style.display=d?"flex":"none",console.log("[Chatbot] Chat window",d?"opened":"closed")})}function g(){try{const t=c();b(t),y.info("Bootstrapping widget for product:",t.productId);const e=document.createElement("div");e.id="__chatbot_root__",e.style.position="fixed",e.style.bottom="20px",t.position==="left"?e.style.left="20px":e.style.right="20px",e.style.zIndex="999999",document.body.appendChild(e),C(e,t),y.info("Widget bootstrap completed")}catch(t){y.error(t.message||t)}}(function(){console.log("[Chatbot] index.js loaded"),!window.__CHATBOT_INITIALIZED__&&(window.__CHATBOT_INITIALIZED__=!0,document.readyState==="loading"?document.addEventListener("DOMContentLoaded",g):g())})()});
