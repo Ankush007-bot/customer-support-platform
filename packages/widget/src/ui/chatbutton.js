@@ -1,9 +1,14 @@
 // src/ui/ChatButton.js
 
+import { createChatWindow } from "./ChatWindow";
+
 export function createChatButton(root, config) {
     console.log('[Chatbot] ChatButton.js loaded');
   // 1️⃣ Create Shadow DOM root
   const shadow = root.attachShadow({ mode: 'open' });
+
+  // 👉 create chat window first
+  const chatWindow = createChatWindow(shadow);
 
   // 2️⃣ Create floating button
   const button = document.createElement('button');
@@ -42,6 +47,9 @@ export function createChatButton(root, config) {
   let chatOpen = false;
   button.addEventListener('click', () => {
     chatOpen = !chatOpen;
+    // task 2.2
+    chatWindow.style.display = chatOpen ? 'flex' : 'none';
+
     console.log('[Chatbot] Chat window', chatOpen ? 'opened' : 'closed');
     // TODO: Open actual chat window
   });
