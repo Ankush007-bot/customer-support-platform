@@ -29,7 +29,9 @@ export function createChatWindow(shadowRoot) {
   const chatWindow = document.createElement('div');
   chatWindow.id = 'chat-window';
 
-  chatWindow.style.position = 'fixed';
+  //chatWindow.style.position = 'fixed';
+  chatWindow.style.position = "relative";
+
   chatWindow.style.bottom = '90px';
   chatWindow.style.right = '20px';
   chatWindow.style.width = '320px';
@@ -52,8 +54,18 @@ export function createChatWindow(shadowRoot) {
       💬 Support Chat
     </div>
 
-    <div id="chat-content" style="padding:12px; font-size:14px;">
+    <div id="chat-content"  style="
+      padding:12px;
+      font-size:14px;
+      height:260px;
+      overflow-y:auto;
+    ">
       <p>How can we help you?</p>
+
+
+    
+
+
 
       <div id="question-list"></div>
 
@@ -65,7 +77,18 @@ export function createChatWindow(shadowRoot) {
         border-radius:6px;
       "></div>
 
+      <div
+        id="messages"
+        style="
+           margin-top:8px;
+    padding-right:4px;
+        "
+        ></div>
+
     </div>
+
+
+        
 
 
 
@@ -242,6 +265,7 @@ const sendBtn = shadowRoot.getElementById("chat-send-btn");
 const chatContent = shadowRoot.getElementById("chat-content");
 
 function addUserMessage(text) {
+    const messages = shadowRoot.getElementById("messages");
   const msg = document.createElement("div");
   msg.innerText = text;
 
@@ -253,8 +277,10 @@ function addUserMessage(text) {
   msg.style.maxWidth = "80%";
   msg.style.marginLeft = "auto"; // right side (user)
 
-  chatContent.appendChild(msg);
-  chatContent.scrollTop = chatContent.scrollHeight;
+//   chatContent.appendChild(msg);
+  messages.appendChild(msg);
+
+  messages.scrollTop = messages.scrollHeight;  //Scroll ko automatically bilkul bottom tak le jana,Scroll ko automatically bilkul bottom tak le jana,Jab naya message add ho
 }
 
 function handleSend() {
