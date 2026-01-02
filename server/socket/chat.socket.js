@@ -39,23 +39,23 @@ function initChatSocket(io) {
 
   
       // agent typing
-     // socket.emit("agent:typing");
+    //  socket.emit("agent:typing");
      
-      // const reply ="Thanks for reaching out! How can I help you?"
-      // setTimeout(() => {
-      //   session.messages.push({
-      //     from: "agent",
-      //     text: reply,
-      //   });
+    //   const reply ="Thanks for reaching out! How can I help you?"
+    //   setTimeout(() => {
+    //     session.messages.push({
+    //       from: "agent",
+    //       text: reply,
+    //     });
 
 
-      //   socket.emit("agent:message", {
-      //     text: reply,
-      //   });
+    //     socket.emit("agent:message", {
+    //       text: reply,
+    //     });
          
         
 
-      // }, 1200);
+    //   }, 1200);
 
 
 

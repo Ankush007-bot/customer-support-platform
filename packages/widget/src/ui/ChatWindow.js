@@ -1,4 +1,4 @@
-import { addUserMessage,showTyping } from "./messages";
+import { addUserMessage, showTyping } from "./messages";
 import { socket } from "../socket";
 
 export function createChatWindow(shadowRoot) {
@@ -20,6 +20,20 @@ export function createChatWindow(shadowRoot) {
     </div>
     <div id="chat-body" style="padding:12px;font-size:14px;height:260px;overflow-y:auto;">
       <div id="messages"></div>
+
+
+              <div id="connect-agent" style="
+          margin-top:10px;
+          text-align:center;
+          font-size:13px;
+          color:#007bff;
+          cursor:pointer;
+        ">
+
+  👨‍💻 Talk to a live agent
+</div>
+
+
       <div id="bot-typing" style="display:none;margin-top:8px;font-size:12px;color:#777;">🤖 Bot is typing...</div>
     </div>
     <div id="chat-input" style="position:absolute;bottom:0;left:0;width:100%;display:flex;border-top:1px solid #eee;">
@@ -36,10 +50,10 @@ export function createChatWindow(shadowRoot) {
       <div id="typing-indicator" style="margin-top:10px;font-size:12px;color:#777;display:none;">🧑‍💻 Agent is typing...</div>
     </div>
   `;
-//
+  //
   shadowRoot.appendChild(chatWindow);
 
-  
+
   // --- Input handlers ---
   const input = shadowRoot.getElementById("chat-text-input");
   const sendBtn = shadowRoot.getElementById("chat-send-btn");
@@ -57,5 +71,16 @@ export function createChatWindow(shadowRoot) {
 
   sendBtn.onclick = handleSend;
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") handleSend(); });
+
+
+  const connectAgentBtn = shadowRoot.getElementById("connect-agent");
+
+  connectAgentBtn.onclick = () => {
+    socket.emit("connect-agent");
+
+    connectAgentBtn.style.display = "none";
+  };
+
+
   return chatWindow;
 }
