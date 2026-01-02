@@ -16,6 +16,8 @@ function initChatSocket(io) {
 
   // client ko sessionId bhejo
   socket.emit("session:init", { sessionId });
+  
+
 // client → server
     socket.on("chat:message", (payload) => {
      // console.log("[chat:message]", payload);
@@ -25,16 +27,26 @@ function initChatSocket(io) {
 
   session.messages.push({
     from: "user",
-    text: data.text,
+    text: payload.text,
     time: Date.now(),
   });
       // agent typing
       socket.emit("agent:typing");
-
+     
+      const reply ="Thanks for reaching out! How can I help you?"
       setTimeout(() => {
-        socket.emit("agent:message", {
-          text: "Thanks for reaching out! How can I help you?",
+        session.messages.push({
+          from: "agent",
+          text: reply,
         });
+
+
+        socket.emit("agent:message", {
+          text: reply,
+        });
+         
+        
+
       }, 1200);
     });
     socket.on("disconnect", () => {
