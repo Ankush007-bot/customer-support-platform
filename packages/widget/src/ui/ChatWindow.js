@@ -26,6 +26,9 @@ export function createChatWindow(shadowRoot) {
       <input id="chat-text-input" type="text" placeholder="Type your message..." style="flex:1;border:none;padding:10px;outline:none;font-size:14px;" />
       <button id="chat-send-btn" style="border:none;padding:0 16px;cursor:pointer;background:#007bff;color:#fff;font-size:14px;">Send</button>
     </div>
+
+      <div id="typing-indicator" style="margin-top:10px;font-size:12px;color:#777;display:none;">🧑‍💻 Agent is typing...</div>
+
     <div id="agent-screen" style="display:none;padding:12px;font-size:14px;text-align:center;">
       <div style="margin-bottom:10px;">🧑‍💻 Connecting you to a live agent...</div>
       <div style="font-size:12px;color:#777;">Please wait, this may take a few seconds</div>
@@ -33,7 +36,7 @@ export function createChatWindow(shadowRoot) {
       <div id="typing-indicator" style="margin-top:10px;font-size:12px;color:#777;display:none;">🧑‍💻 Agent is typing...</div>
     </div>
   `;
-
+//
   shadowRoot.appendChild(chatWindow);
 
   

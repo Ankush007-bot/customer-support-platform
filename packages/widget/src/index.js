@@ -5,14 +5,37 @@ import { addAgentMessage, showTyping, hideTyping } from "./ui/messages";
 import { createChatWindow } from "./ui/ChatWindow";
 
 
+
+function getSessionId() {
+  let sessionId = localStorage.getItem("chat_session_id");
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("chat_session_id", sessionId);
+  }
+
+  return sessionId;
+}
+const sessionId = getSessionId();
+
+socket.emit("session:init", {
+  sessionId,
+});
+
+
 let shadowRoot = null;
 
 function bindSocketEvents() {
   socket.on("connect", () => console.log("[Chatbot] Socket connected"));
 
+socket.on("session:init", (data) => {
+    console.log('session front end',data)
+  });
+
   socket.on("agent:typing", () => {
     if (!shadowRoot) return;
     showTyping(shadowRoot);
+
   });
 
   socket.on("agent:message", (data) => {
