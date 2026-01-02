@@ -13,6 +13,7 @@ function initChatSocket(io) {
   sessions.set(sessionId, {
     sessionId,
     socketId: socket.id,
+     mode: "bot",        // 👈 default
     messages: [],
     createdAt: Date.now(),
   });
@@ -30,11 +31,24 @@ function initChatSocket(io) {
       const session = sessions.get(sessionId);
   if (!session) return;
 
-  session.messages.push({
-    from: "user",
-    text: payload.text,
-    time: Date.now(),
-  });
+
+
+   if (session.mode === "agent") {
+    // agent typing
+    socket.emit("agent:typing");
+
+    setTimeout(() => {
+      socket.emit("agent:message", {
+        text: "Thanks for reaching out! How can I help you?",
+      });
+    }, 1200);
+  }
+
+  // session.messages.push({
+  //   from: "user",
+  //   text: payload.text,
+  //   time: Date.now(),
+  // });
 
 
   
@@ -60,6 +74,10 @@ function initChatSocket(io) {
 
 
     });
+
+
+
+    
 
     socket.on("connect-agent", () => {
   const session = sessions.get(socket.sessionId);
