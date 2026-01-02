@@ -51,7 +51,7 @@ export function createChatWindow(shadowRoot) {
     addUserMessage(shadowRoot, value);
     input.value = "";
 
-    showTyping(shadowRoot);
+    //showTyping(shadowRoot);
     socket.emit("chat:message", { text: value });
   }
 

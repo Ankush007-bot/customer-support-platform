@@ -4,7 +4,6 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 //import crypto from "crypto";
 
-const crypto = require("crypto")
 
 const healthRoute = require("./routes/health");
 const initChatSocket = require("./socket/chat.socket");

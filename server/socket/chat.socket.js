@@ -1,3 +1,5 @@
+const crypto = require("crypto")
+
 const sessions = new Map();
 
 
@@ -9,10 +11,13 @@ function initChatSocket(io) {
   const sessionId = crypto.randomUUID();
 
   sessions.set(sessionId, {
+    sessionId,
     socketId: socket.id,
     messages: [],
     createdAt: Date.now(),
   });
+
+  socket.sessionId = sessionId;
 
   // client ko sessionId bhejo
   socket.emit("session:init", { sessionId });
@@ -21,7 +26,7 @@ function initChatSocket(io) {
 // client → server
     socket.on("chat:message", (payload) => {
      // console.log("[chat:message]", payload);
-
+     const sessionId = socket.sessionId;
       const session = sessions.get(sessionId);
   if (!session) return;
 
@@ -30,30 +35,57 @@ function initChatSocket(io) {
     text: payload.text,
     time: Date.now(),
   });
+
+
+  
       // agent typing
-      socket.emit("agent:typing");
+     // socket.emit("agent:typing");
      
-      const reply ="Thanks for reaching out! How can I help you?"
-      setTimeout(() => {
-        session.messages.push({
-          from: "agent",
-          text: reply,
-        });
+      // const reply ="Thanks for reaching out! How can I help you?"
+      // setTimeout(() => {
+      //   session.messages.push({
+      //     from: "agent",
+      //     text: reply,
+      //   });
 
 
-        socket.emit("agent:message", {
-          text: reply,
-        });
+      //   socket.emit("agent:message", {
+      //     text: reply,
+      //   });
          
         
 
-      }, 1200);
+      // }, 1200);
+
+
+
     });
-    socket.on("disconnect", () => {
-         sessions.delete(sessionId);
-      console.log("[Socket] client disconnected:", socket.id);
-      
+
+    socket.on("connect-agent", () => {
+  const session = sessions.get(socket.sessionId);
+  if (!session) return;
+
+  session.mode = "agent";
+
+  socket.emit("agent:typing");
+
+  setTimeout(() => {
+    socket.emit("agent:message", {
+      text: "Hi 👋 I’m Alex from support.",
     });
+  }, 1500);
+});
+
+
+    
+   socket.on("disconnect", () => {
+  if (socket.sessionId) {
+    sessions.delete(socket.sessionId);
+  }
+  console.log("[Socket] client disconnected:", socket.id);
+});
+
+
   });
 }
 
