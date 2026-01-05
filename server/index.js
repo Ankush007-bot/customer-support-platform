@@ -17,6 +17,9 @@ const agentRoutes = require("./routes/agent.routes");
 
 const adminRoutes = require("./routes/admin.routes");
 
+const initAgentSocket = require("./socket/agent.socket");
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -42,7 +45,7 @@ const io = new Server(server, {
 });
 
 initChatSocket(io);
-
+initAgentSocket(io);
 
 
 
