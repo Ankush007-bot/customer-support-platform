@@ -17,7 +17,7 @@ const agentRoutes = require("./routes/agent.routes");
 
 const adminRoutes = require("./routes/admin.routes");
 
-const initAgentSocket = require("./socket/agent.socket");
+const {initAgentSocket} = require("./socket/agent.socket");
 
 
 const app = express();
