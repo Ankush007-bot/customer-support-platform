@@ -22,6 +22,10 @@ socket.emit("session:init", {
   sessionId,
 });
 
+// socket.emit("agent:login", {
+//   agentId: "0bd270ea-fef7-46d8-9251-f78941cdd46c"
+// });
+
 
 let shadowRoot = null;
 
