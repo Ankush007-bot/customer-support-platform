@@ -1,3 +1,64 @@
+
+// 🧪 JEST kya hai?
+
+// Jest = Testing Framework
+
+// 👉 Kaam:
+
+// Tests run karta hai
+
+// Result batata hai (PASS / FAIL)
+
+// Assertions deta hai (expect())
+
+// Example
+// expect(res.statusCode).toBe(200);
+
+
+// Matlab:
+
+// “Agar status 200 nahi hai → test fail”
+
+// Jest kya-kya karta hai?
+
+// Test cases chalata hai
+
+// Mocking (jest.mock)
+
+// Coverage nikalta hai
+
+// CI/CD ke liye perfect
+
+// 👉 Jest bina supertest ke bhi chal sakta hai
+
+// 🌐 SUPERTEST kya hai?
+
+// Supertest = HTTP API testing tool
+
+// 👉 Kaam:
+
+// Express app ko fake HTTP request bhejna
+
+// Real server start nahi karta
+
+// Fast + safe
+
+// Example
+// request(app).get("/health");
+
+
+// Matlab:
+
+// “Express app ko GET /health bhejo”
+
+
+
+
+
+
+
+
+
 // 🎯 Problem Samjho (Important)
 
 // Abhi tumhari file:
